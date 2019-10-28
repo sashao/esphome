@@ -4,6 +4,7 @@ from esphome.const import CONF_ID, CONF_PASSWORD, CONF_PORT, CONF_SAFE_MODE
 from esphome.core import CORE, coroutine_with_priority
 
 CODEOWNERS = ['@esphome/core']
+AUTO_LOAD = ['tcp']
 DEPENDENCIES = ['network']
 
 ota_ns = cg.esphome_ns.namespace('ota')

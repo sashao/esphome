@@ -11,8 +11,7 @@ namespace api {
 
 class APIConnection : public APIServerConnection {
  public:
-  APIConnection(AsyncClient *client, APIServer *parent);
-  virtual ~APIConnection();
+  APIConnection(std::unique_ptr<tcp::TCPSocket> socket, APIServer *parent);
 
   void disconnect_client();
   void loop();
@@ -133,10 +132,6 @@ class APIConnection : public APIServerConnection {
  protected:
   friend APIServer;
 
-  void on_error_(int8_t error);
-  void on_disconnect_();
-  void on_timeout_(uint32_t time);
-  void on_data_(uint8_t *buf, size_t len);
   void parse_recv_buffer_();
 
   enum class ConnectionState {
@@ -162,7 +157,7 @@ class APIConnection : public APIServerConnection {
   bool service_call_subscription_{false};
   bool current_nodelay_{false};
   bool next_close_{false};
-  AsyncClient *client_;
+  std::unique_ptr<tcp::TCPSocket> client_;
   APIServer *parent_;
   InitialStateIterator initial_state_iterator_;
   ListEntitiesIterator list_entities_iterator_;
