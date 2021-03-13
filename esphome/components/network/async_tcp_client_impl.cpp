@@ -35,7 +35,9 @@ bool AsyncTcpClientImpl::canSend() const { return impl_->canSend(); }
 
 size_t AsyncTcpClientImpl::space() const { return impl_->space(); }
 
-size_t AsyncTcpClientImpl::add(const char* data, size_t size) { return impl_->add(data, size); }
+size_t AsyncTcpClientImpl::add(const char* data, size_t size, bool wait_for_more) {
+	return impl_->add(data, size, ASYNC_WRITE_FLAG_COPY | (wait_for_more ? ASYNC_WRITE_FLAG_MORE : 0));
+}
 
 bool AsyncTcpClientImpl::send() { return impl_->send(); }
 

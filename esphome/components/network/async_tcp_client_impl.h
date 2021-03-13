@@ -18,45 +18,45 @@ namespace network {
 class AsyncTcpClientImpl : public AsyncClient {
  public:
   AsyncTcpClientImpl(::AsyncClient* wrapped);
-  virtual ~AsyncTcpClientImpl();
+  ~AsyncTcpClientImpl() override;
 
-  virtual bool connect(const char* host, uint16_t port) override;
-  virtual void close(bool now = false) override;
-  virtual void stop() override;
-  virtual int8_t abort() override;
-  virtual bool free() override;
+  bool connect(const char* host, uint16_t port) override;
+  void close(bool now = false) override;
+  void stop() override;
+  int8_t abort() override;
+  bool free() override;
 
-  virtual bool canSend() const override;
-  virtual size_t space() const override;                       // space available in the TCP window
-  virtual size_t add(const char* data, size_t size) override;  // add for sending
-  virtual bool send() override;                                // send all data added with the method above
+  bool canSend() const override;
+  size_t space() const override;                       // space available in the TCP window
+  size_t add(const char* data, size_t size, bool wait_for_more = false) override;  // add for sending
+  bool send() override;                                // send all data added with the method above
 
-  virtual size_t write(const char* data) override;
-  virtual size_t write(const char* data, size_t size) override;  // only when canSend() == true
+  size_t write(const char* data) override;
+  size_t write(const char* data, size_t size) override;  // only when canSend() == true
 
-  virtual bool connecting() const override;
-  virtual bool connected() const override;
-  virtual bool disconnecting() const override;
-  virtual bool disconnected() const override;
-  virtual bool freeable() const override;  // disconnected or disconnecting
+  bool connecting() const override;
+  bool connected() const override;
+  bool disconnecting() const override;
+  bool disconnected() const override;
+  bool freeable() const override;  // disconnected or disconnecting
 
-  virtual void setNoDelay(bool nodelay) override;
-  virtual bool getNoDelay() const override;
+  void setNoDelay(bool nodelay) override;
+  bool getNoDelay() const override;
 
-  virtual IPAddress remoteIP();
+  IPAddress remoteIP() override;
 
   // Set Callbacks
-  virtual void onConnect(AcConnectHandler cb, void* arg) override;     // on successful connect
-  virtual void onDisconnect(AcConnectHandler cb, void* arg) override;  // disconnected
-  virtual void onAck(AcAckHandler cb, void* arg) override;             // ack received
-  virtual void onError(AcErrorHandler cb, void* arg) override;         // unsuccessful connect or error
-  virtual void onData(AcDataHandler cb, void* arg) override;           // data received (called if onPacket is not
+  void onConnect(AcConnectHandler cb, void* arg) override;     // on successful connect
+  void onDisconnect(AcConnectHandler cb, void* arg) override;  // disconnected
+  void onAck(AcAckHandler cb, void* arg) override;             // ack received
+  void onError(AcErrorHandler cb, void* arg) override;         // unsuccessful connect or error
+  void onData(AcDataHandler cb, void* arg) override;           // data received (called if onPacket is not
                                                                        // used)
-  virtual void onPacket(AcPacketHandler cb, void* arg) override;       // data received
-  virtual void onTimeout(AcTimeoutHandler cb, void* arg) override;     // ack timeout
-  virtual void onPoll(AcConnectHandler cb, void* arg) override;        // every 125ms when connected
+  void onPacket(AcPacketHandler cb, void* arg) override;       // data received
+  void onTimeout(AcTimeoutHandler cb, void* arg) override;     // ack timeout
+  void onPoll(AcConnectHandler cb, void* arg) override;        // every 125ms when connected
 
- private:
+ protected:
   std::unique_ptr<::AsyncClient> impl_;
 };
 

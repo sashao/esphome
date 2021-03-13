@@ -42,7 +42,8 @@ class AsyncClient {
 
   virtual bool canSend() const = 0;
   virtual size_t space() const = 0;                       // space available in the TCP window
-  virtual size_t add(const char* data, size_t size) = 0;  // add for sending
+  /// always copies data
+  virtual size_t add(const char* data, size_t size, bool wait_for_more = false) = 0;  // add for sending
   virtual bool send() = 0;                                // send all data added with the method above
 
   virtual size_t write(const char* data) = 0;

@@ -18,13 +18,13 @@ namespace network {
 class AsyncTcpServerImpl : public AsyncServer {
  public:
   AsyncTcpServerImpl(uint16_t port);
-  virtual ~AsyncTcpServerImpl();
+  ~AsyncTcpServerImpl() override;
 
-  virtual void onClient(AcConnectHandler cb, void* arg) override;
-  virtual void begin() override;
-  virtual void end() override;
-  virtual void setNoDelay(bool nodelay) override;
-  virtual bool getNoDelay() const override;
+  void onClient(AcConnectHandler cb, void* arg) override;
+  void begin() override;
+  void end() override;
+  void setNoDelay(bool nodelay) override;
+  bool getNoDelay() const override;
 
  protected:
   std::unique_ptr<::AsyncServer> impl_;

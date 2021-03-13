@@ -686,10 +686,8 @@ bool APIConnection::send_buffer(ProtoWriteBuffer buffer, uint32_t message_type) 
     }
   }
 
-  this->client_->add(reinterpret_cast<char *>(header.data()), header.size(),
-                     ASYNC_WRITE_FLAG_COPY | ASYNC_WRITE_FLAG_MORE);
-  this->client_->add(reinterpret_cast<char *>(buffer.get_buffer()->data()), buffer.get_buffer()->size(),
-                     ASYNC_WRITE_FLAG_COPY);
+  this->client_->add(reinterpret_cast<char *>(header.data()), header.size(), true);
+  this->client_->add(reinterpret_cast<char *>(buffer.get_buffer()->data()), buffer.get_buffer()->size());
   bool ret = this->client_->send();
   return ret;
 }

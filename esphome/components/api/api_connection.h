@@ -11,9 +11,10 @@ namespace api {
 
 class APIConnection : public APIServerConnection {
  public:
-  APIConnection(AsyncClient *client, APIServer *parent);
+  APIConnection(network::AsyncClient *client, APIServer *parent);
   virtual ~APIConnection();
 
+  void set_nodelay(bool nodelay);
   void disconnect_client();
   void loop();
 
@@ -162,7 +163,7 @@ class APIConnection : public APIServerConnection {
   bool service_call_subscription_{false};
   bool current_nodelay_{false};
   bool next_close_{false};
-  AsyncClient *client_;
+  network::AsyncClient *client_;
   APIServer *parent_;
   InitialStateIterator initial_state_iterator_;
   ListEntitiesIterator list_entities_iterator_;
