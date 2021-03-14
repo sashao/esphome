@@ -84,7 +84,6 @@ venv.bak/
 .vscode/
 !.vscode/tasks.json
 CMakeListsPrivate.txt
-CMakeLists.txt
 
 # User-specific stuff:
 .idea/**/workspace.xml

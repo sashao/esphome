@@ -2,7 +2,9 @@
 
 #include <string>
 
+#ifndef CMAKE_BUILD
 #include "esphome/core/esphal.h"
+#endif
 #include "esphome/core/defines.h"
 
 namespace esphome {
@@ -48,6 +50,9 @@ static bool DEFAULT_IN_FLASH = false;
 #ifdef ARDUINO_ARCH_ESP32
 static bool DEFAULT_IN_FLASH = true;
 #endif
+#ifdef CMAKE_BUILD
+static bool DEFAULT_IN_FLASH = true;
+#endif
 
 class ESPPreferences {
  public:
@@ -90,19 +95,23 @@ template<typename T> ESPPreferenceObject ESPPreferences::make_preference(uint32_
 }
 
 template<typename T> bool ESPPreferenceObject::save(T *src) {
+#ifndef CMAKE_BUILD
   if (!this->is_initialized())
     return false;
   memset(this->data_, 0, this->length_words_ * 4);
   memcpy(this->data_, src, sizeof(T));
+#endif
   return this->save_();
 }
 
 template<typename T> bool ESPPreferenceObject::load(T *dest) {
+#ifndef CMAKE_BUILD
   memset(this->data_, 0, this->length_words_ * 4);
   if (!this->load_())
     return false;
 
   memcpy(dest, this->data_, sizeof(T));
+#endif
   return true;
 }
 

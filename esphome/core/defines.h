@@ -6,6 +6,9 @@
 #define USE_BINARY_SENSOR
 #define USE_SENSOR
 #define USE_SWITCH
+
+#ifndef CMAKE_BUILD
+
 #define USE_WIFI
 #define USE_STATUS_LED
 #define USE_TEXT_SENSOR
@@ -23,3 +26,9 @@
 #define USE_TIME
 #define USE_DEEP_SLEEP
 #define USE_CAPTIVE_PORTAL
+
+#else
+
+#define NAN 0
+
+#endif

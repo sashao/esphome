@@ -7,7 +7,9 @@
 #include <type_traits>
 
 #include "esphome/core/optional.h"
+#ifndef CMAKE_BUILD
 #include "esphome/core/esphal.h"
+#endif
 
 #ifdef CLANG_TIDY
 #undef ICACHE_RAM_ATTR

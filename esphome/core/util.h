@@ -1,7 +1,7 @@
 #pragma once
 
 #include <string>
-#include "IPAddress.h"
+#include "esphome/components/network/async_ipaddress.h"
 
 namespace esphome {
 

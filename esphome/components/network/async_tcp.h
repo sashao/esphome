@@ -9,8 +9,8 @@
 
 #pragma once
 
-#include "IPAddress.h"
 #include <functional>
+#include "async_ipaddress.h"
 
 struct pbuf;  // packet bufers from LwIp
 
