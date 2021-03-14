@@ -9,19 +9,20 @@
 
 
 #include<cmath>
+#include"HardwareSerial.h"
 
-class HardwareSerial {
+unsigned long millis();
 
+void delay(unsigned long ms);
+
+void yield();
+
+class ESPInterface {
+public:
+	void restart();
 };
 
-unsigned long millis() {
-	static unsigned long c = 1;
-	return ++c;
-}
-
-void delay(unsigned long ms) {
-	(void)ms;
-}
+extern ESPInterface ESP;
 
 #define ICACHE_RAM_ATTR
 

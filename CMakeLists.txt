@@ -26,12 +26,40 @@ add_library(esphome
 	esphome/components/api/api_pb2.cpp
 	esphome/components/api/api_pb2_service.cpp
 	esphome/components/network/async_tcp.cpp
+	esphome/components/logger/logger.cpp
+
+	esphome/core/util.cpp
+	esphome/core/controller.cpp
+	esphome/core/helpers.cpp
+	esphome/core/component.cpp
+	esphome/core/log.cpp
+	esphome/core/preferences.cpp
+	esphome/core/scheduler.cpp
+	esphome/core/application.cpp
+	
+	esphome/cmake_arduino/Arduino.cpp
+	esphome/cmake_arduino/HardwareSerial.cpp
 )
 #target_link_libraries(serialtransmit Qt5::Core)
 
+set(ESPINCLUDES 
+  $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}>
+  $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}>/esphome/cmake_arduino
+)
+
 target_include_directories(esphome PUBLIC
   $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}>
+  $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}>/esphome/cmake_arduino
 )
+
+add_executable(esp84 esphome/cmake_arduino/example/main.cpp)
+
+target_include_directories(esp84 PUBLIC
+  $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}>
+  $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}>/esphome/cmake_arduino
+)
+target_link_libraries(esp84 esphome)
+
 
 add_definitions(-DCMAKE_BUILD)
 
