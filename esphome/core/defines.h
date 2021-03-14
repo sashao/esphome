@@ -29,6 +29,6 @@
 
 #else
 
-#define NAN 0
+#include<cmath>
 
 #endif

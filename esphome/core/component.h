@@ -2,11 +2,7 @@
 
 #include <string>
 #include <functional>
-#ifndef CMAKE_BUILD
 #include "Arduino.h"
-#else
-#define NAN 0
-#endif
 
 #include "esphome/core/optional.h"
 

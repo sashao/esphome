@@ -47,6 +47,7 @@ bool mdns_setup;
 static const uint8_t WEBSERVER_PORT = 80;
 #endif
 
+#ifndef CMAKE_BUILD
 #ifdef ARDUINO_ARCH_ESP8266
 void network_setup_mdns(IPAddress address, int interface) {
   // Latest arduino framework breaks mDNS for AP interface
@@ -80,6 +81,7 @@ void network_setup_mdns(IPAddress address, int interface) {
     MDNS.addService("prometheus-http", "tcp", WEBSERVER_PORT);
 #endif
   }
+#endif // CMAKE_BUILD
   void network_tick_mdns() {
 #ifdef ARDUINO_ARCH_ESP8266
     if (mdns_setup)

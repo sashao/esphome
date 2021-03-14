@@ -24,17 +24,5 @@ public:
 	}
 };
 
-class HardwareSerial {
-
-};
-
-unsigned long millis() {
-	static unsigned long c = 1;
-	return ++c;
-}
-
-void delay(unsigned long ms) {
-	(void)ms;
-}
 
 #endif
