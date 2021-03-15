@@ -10,15 +10,6 @@
 
 namespace esphome {
 
-namespace network {
-
-AsyncServer *create_async_server(uint16_t port) {
-	// Here it would be possible to return any transport implementation.
-	return nullptr;
-}
-
-} // namespace network
-
 ESPPreferenceObject ESPPreferences::make_preference(size_t length, uint32_t type, bool in_flash) {
   auto pref = ESPPreferenceObject(this->current_offset_, length, type);
   this->current_offset_++;

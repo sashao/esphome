@@ -31,7 +31,7 @@ void Switch::toggle() {
 }
 optional<bool> Switch::get_initial_state() {
   this->rtc_ = global_preferences.make_preference<bool>(this->get_object_id_hash());
-  bool initial_state;
+  bool initial_state = false;
   if (!this->rtc_.load(&initial_state))
     return {};
   return initial_state;

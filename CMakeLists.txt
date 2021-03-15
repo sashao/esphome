@@ -1,19 +1,13 @@
 cmake_minimum_required(VERSION 3.5)
 
-project(serialtransmit LANGUAGES CXX)
+project(esphome LANGUAGES CXX)
 
 set(CMAKE_INCLUDE_CURRENT_DIR ON)
 
-#set(CMAKE_AUTOUIC ON)
-#set(CMAKE_AUTOMOC ON)
-#set(CMAKE_AUTORCC ON)
-
 set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
-#set(CMAKE_C_FLAGS_DEBUG "${CMAKE_C_FLAGS_DEBUG} -DNDEBUG")
+set(CMAKE_C_FLAGS_DEBUG "${CMAKE_C_FLAGS_DEBUG} -DNDEBUG")
 add_compile_options("$<$<CONFIG:DEBUG>:-DNDEBUG>")
-
-#find_package(Qt5Core)
 
 add_library(esphome
 	esphome/components/api/util.cpp
@@ -48,6 +42,8 @@ add_library(esphome
 	
 	esphome/cmake_arduino/Arduino.cpp
 	esphome/cmake_arduino/HardwareSerial.cpp
+	esphome/cmake_arduino/network/async_tcp_client_impl.cpp
+	esphome/cmake_arduino/network/async_tcp_server_impl.cpp
 )
 
 target_include_directories(esphome PUBLIC
