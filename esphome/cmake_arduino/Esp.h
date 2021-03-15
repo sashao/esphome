@@ -18,8 +18,8 @@ void delayMicroseconds(unsigned long ms) {
 }
 
 unsigned long micros() {
-	static unsigned long c = 1;
-	return ++c;
+	static unsigned long C = 1;
+	return ++C;
 }
 
 

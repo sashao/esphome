@@ -18,7 +18,7 @@
 namespace esphome {
 namespace network {
 
-AsyncServer *createAsyncServer(uint16_t port) {
+AsyncServer *create_async_server(uint16_t port) {
   // Here it would be possible to return any transport implementation.
   // default is Arduino AsyncTCP
   return new AsyncTcpServerImpl(port);

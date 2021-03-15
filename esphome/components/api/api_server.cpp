@@ -22,7 +22,7 @@ static const char *TAG = "api";
 void APIServer::setup() {
   ESP_LOGCONFIG(TAG, "Setting up Home Assistant API server...");
   this->setup_controller();
-  this->server_.reset(network::createAsyncServer(this->port_));
+  this->server_.reset(network::create_async_server(this->port_));
   this->server_->setNoDelay(false);
   this->server_->begin();
   this->server_->onClient(

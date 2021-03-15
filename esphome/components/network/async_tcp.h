@@ -88,7 +88,7 @@ class AsyncServer {
   virtual bool getNoDelay() const = 0;
 };
 
-AsyncServer *createAsyncServer(uint16_t port);
+AsyncServer *create_async_server(uint16_t port);
 
 } /* namespace network */
 } /* namespace esphome */

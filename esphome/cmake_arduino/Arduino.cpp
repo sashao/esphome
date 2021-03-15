@@ -12,12 +12,12 @@ namespace esphome {
 
 namespace network {
 
-AsyncServer *createAsyncServer(uint16_t port) {
+AsyncServer *create_async_server(uint16_t port) {
 	// Here it would be possible to return any transport implementation.
 	return nullptr;
 }
 
-}
+} // namespace network
 
 ESPPreferenceObject ESPPreferences::make_preference(size_t length, uint32_t type, bool in_flash) {
   auto pref = ESPPreferenceObject(this->current_offset_, length, type);
@@ -63,8 +63,8 @@ void ESPInterface::restart()
 
 
 unsigned long millis() {
-	static unsigned long c = 1;
-	return ++c;
+	static unsigned long C = 1;
+	return ++C;
 }
 
 void delay(unsigned long ms) {
