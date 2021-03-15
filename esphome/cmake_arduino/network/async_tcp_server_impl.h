@@ -9,6 +9,8 @@
 
 #include <memory>
 #include "esphome/components/network/async_tcp.h"
+#include <boost/asio.hpp>
+
 
 namespace esphome {
 namespace network {
@@ -25,6 +27,9 @@ class AsyncTcpServerImpl : public AsyncServer {
   bool getNoDelay() const override;
 
  protected:
+
+
+//  boost::asio::ip::tcp::acceptor acceptor_;
 };
 
 } /* namespace network */

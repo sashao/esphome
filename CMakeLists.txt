@@ -51,11 +51,20 @@ target_include_directories(esphome PUBLIC
   $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}>/esphome/cmake_arduino
 )
 
-add_executable(test-esp86 esphome/cmake_arduino/example/main.cpp)
-target_link_libraries(test-esp86 esphome)
 
+
+
+
+add_executable(test-esp86 esphome/cmake_arduino/example/main.cpp)
+
+
+find_package(Boost)
+find_package(Threads)
+target_link_libraries(test-esp86 PUBLIC Boost::boost Threads::Threads esphome)
+target_include_directories(test-esp86 PUBLIC ${Boost_INCLUDE_DIRS})
 
 add_definitions(-DCMAKE_BUILD)
 
+#TODO: unit tests here
 
 
