@@ -27,6 +27,15 @@ add_library(esphome
 	esphome/components/api/api_pb2_service.cpp
 	esphome/components/network/async_tcp.cpp
 	esphome/components/logger/logger.cpp
+	esphome/components/sensor/sensor.cpp
+	esphome/components/sensor/filter.cpp
+	esphome/components/binary_sensor/binary_sensor.cpp
+	esphome/components/binary_sensor/filter.cpp
+	esphome/components/switch/switch.cpp
+	esphome/components/homeassistant/sensor/homeassistant_sensor.cpp
+	esphome/components/homeassistant/binary_sensor/homeassistant_binary_sensor.cpp
+	esphome/components/homeassistant/text_sensor/homeassistant_text_sensor.cpp
+#	esphome/components/homeassistant/time/homeassistant_time.cpp
 
 	esphome/core/util.cpp
 	esphome/core/controller.cpp
@@ -40,25 +49,14 @@ add_library(esphome
 	esphome/cmake_arduino/Arduino.cpp
 	esphome/cmake_arduino/HardwareSerial.cpp
 )
-#target_link_libraries(serialtransmit Qt5::Core)
-
-set(ESPINCLUDES 
-  $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}>
-  $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}>/esphome/cmake_arduino
-)
 
 target_include_directories(esphome PUBLIC
   $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}>
   $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}>/esphome/cmake_arduino
 )
 
-add_executable(esp84 esphome/cmake_arduino/example/main.cpp)
-
-target_include_directories(esp84 PUBLIC
-  $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}>
-  $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}>/esphome/cmake_arduino
-)
-target_link_libraries(esp84 esphome)
+add_executable(test-esp86 esphome/cmake_arduino/example/main.cpp)
+target_link_libraries(test-esp86 esphome)
 
 
 add_definitions(-DCMAKE_BUILD)

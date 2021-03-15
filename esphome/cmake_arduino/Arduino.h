@@ -11,6 +11,9 @@
 #include<cmath>
 #include"HardwareSerial.h"
 
+float pow10f(float v);
+double pow10(double v);
+
 unsigned long millis();
 
 void delay(unsigned long ms);

@@ -11,12 +11,7 @@
 #include<string.h>
 
 
-int pow10(int v) {
-	int r = 1;
-	for( int i =0; i!=v; ++i)
-		r*=10;
-	return r;
-}
+
 
 void delayMicroseconds(unsigned long ms) {
 	(void)ms;

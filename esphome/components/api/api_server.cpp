@@ -16,18 +16,13 @@
 namespace esphome {
 namespace api {
 
-network::AsyncServer *createAsyncServer(uint16_t port) {
-  // Here it would be possible to return any transport implementation.
-  return new esphome::network::AsyncTcpServerImpl(port);
-}
-
 static const char *TAG = "api";
 
 // APIServer
 void APIServer::setup() {
   ESP_LOGCONFIG(TAG, "Setting up Home Assistant API server...");
   this->setup_controller();
-  this->server_.reset(createAsyncServer(this->port_));
+  this->server_.reset(network::createAsyncServer(this->port_));
   this->server_->setNoDelay(false);
   this->server_->begin();
   this->server_->onClient(

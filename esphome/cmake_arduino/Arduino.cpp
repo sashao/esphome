@@ -6,27 +6,37 @@
  */
 #include "Arduino.h"
 #include "esphome/core/preferences.h"
+#include "esphome/components/network/async_tcp.h"
 
 namespace esphome {
+
+namespace network {
+
+AsyncServer *createAsyncServer(uint16_t port) {
+	// Here it would be possible to return any transport implementation.
+	return nullptr;
+}
+
+}
+
+ESPPreferenceObject ESPPreferences::make_preference(size_t length, uint32_t type, bool in_flash) {
+  auto pref = ESPPreferenceObject(this->current_offset_, length, type);
+  this->current_offset_++;
+  return pref;
+}
+
 
 ESPPreferences::ESPPreferences() : current_offset_(0)
 {
 }
 
-//bool ESPPreferenceObject::load_()
-//{
-//	return true;
-//}
+void ESPPreferences::begin() {
+}
 
 bool ESPPreferenceObject::load_internal_()
 {
 	return true;
 }
-
-//bool ESPPreferenceObject::save_()
-//{
-//	return true;
-//}
 
 bool ESPPreferenceObject::save_internal_()
 {
@@ -65,5 +75,18 @@ void yield() {
 
 }
 
+float pow10f(float v)
+{
+	return exp10f(v);
+}
+
+double pow10(double v) {
+	return exp10(v);
+}
+
+
 ESPInterface ESP;
+
+
+
 

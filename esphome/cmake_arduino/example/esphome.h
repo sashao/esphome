@@ -20,7 +20,6 @@
 #include "esphome/components/ethernet/ethernet_component.h"
 #include "esphome/components/homeassistant/sensor/homeassistant_sensor.h"
 #include "esphome/components/logger/logger.h"
-#include "esphome/components/network/async_ipaddress.h"
 #include "esphome/components/network/async_tcp.h"
 #include "esphome/components/network/async_tcp_client_impl.h"
 #include "esphome/components/network/async_tcp_server_impl.h"

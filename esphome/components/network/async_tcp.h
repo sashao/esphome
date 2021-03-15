@@ -10,7 +10,7 @@
 #pragma once
 
 #include <functional>
-#include "async_ipaddress.h"
+#include "IPAddress.h"
 
 struct pbuf;  // packet bufers from LwIp
 
@@ -87,6 +87,8 @@ class AsyncServer {
   virtual void setNoDelay(bool nodelay) = 0;
   virtual bool getNoDelay() const = 0;
 };
+
+AsyncServer *createAsyncServer(uint16_t port);
 
 } /* namespace network */
 } /* namespace esphome */
