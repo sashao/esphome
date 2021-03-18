@@ -27,9 +27,9 @@ class AsyncTcpServerImpl : public AsyncServer {
   bool getNoDelay() const override;
 
  protected:
-
-
-//  boost::asio::ip::tcp::acceptor acceptor_;
+  void accept();
+  boost::asio::ip::tcp::acceptor acceptor_;
+  std::vector<std::pair<AcConnectHandler, void*>> onClient_;
 };
 
 } /* namespace network */

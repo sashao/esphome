@@ -22,6 +22,7 @@ homeassistant::HomeassistantSensor *ha_hello_world;
 #include <boost/asio/steady_timer.hpp>
 #include <iostream>
 
+
 void setup() {
   App.pre_setup("test-x86", __DATE__ ", " __TIME__);
 
@@ -56,7 +57,7 @@ void loop() {
 	App.loop();
 }
 
-const int one_tick = 1;
+const int one_tick = 10;
 
 void timer_timeout(const boost::system::error_code& /*e*/,
 boost::asio::steady_timer* t)
@@ -73,7 +74,6 @@ boost::asio::io_service *network_io_service;
 
 int main()
 {
-	setup();
 
     try
     {
@@ -85,6 +85,10 @@ int main()
       timer.async_wait(boost::bind(timer_timeout,
                                    boost::asio::placeholders::error, &timer));
 
+//      boost::asio::signal_set signals(io_context, SIGINT, SIGTERM);
+//      signals.async_wait([&](auto, auto){ io_context.stop(); });
+
+  	 setup();
       io_service.run();
     }
     catch (std::exception& e)

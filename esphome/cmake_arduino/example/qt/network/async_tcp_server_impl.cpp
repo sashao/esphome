@@ -9,10 +9,6 @@
 #include "async_tcp_client_impl.h"
 #include "esphome/core/log.h"
 
-#include <boost/bind.hpp>
-
-extern boost::asio::io_service *network_io_service;
-
 
 namespace esphome {
 namespace network {
@@ -24,7 +20,7 @@ AsyncServer *create_async_server(uint16_t port) {
 }
 
 AsyncTcpServerImpl::AsyncTcpServerImpl(uint16_t port)
-//    : acceptor_(*network_io_service)
+
 {
 
 }
@@ -34,12 +30,8 @@ AsyncTcpServerImpl::~AsyncTcpServerImpl() {
 }
 
 void AsyncTcpServerImpl::onClient(AcConnectHandler cb, void* arg) {
-//  impl_->onClient(
-//      [cb](void* arg, ::AsyncClient* connection) {
-//        AsyncTcpClientImpl* client_wrapper = new AsyncTcpClientImpl(connection);
-//        cb(arg, client_wrapper);
-//      },
-//      arg);
+
+
 }
 
 void AsyncTcpServerImpl::begin() {

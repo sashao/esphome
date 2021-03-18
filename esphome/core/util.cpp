@@ -36,6 +36,10 @@ bool network_is_connected() {
     return wifi::global_wifi_component->is_connected();
 #endif
 
+#ifdef CMAKE_BUILD
+  return true;
+#endif
+
   return false;
 }
 
