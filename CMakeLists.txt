@@ -42,8 +42,6 @@ add_library(esphome
 	
 	esphome/cmake_arduino/Arduino.cpp
 	esphome/cmake_arduino/HardwareSerial.cpp
-	esphome/cmake_arduino/network/async_tcp_client_impl.cpp
-	esphome/cmake_arduino/network/async_tcp_server_impl.cpp
 )
 
 target_include_directories(esphome PUBLIC
@@ -53,15 +51,31 @@ target_include_directories(esphome PUBLIC
 
 
 
+# QT based example
+
+add_executable(test-esp86-qt 
+	esphome/cmake_arduino/example/qt/main.cpp
+	
+	esphome/cmake_arduino/example/qt/network/async_tcp_client_impl.cpp
+	esphome/cmake_arduino/example/qt/network/async_tcp_server_impl.cpp
+)
+target_link_libraries(test-esp86-qt PUBLIC esphome)
 
 
-add_executable(test-esp86 esphome/cmake_arduino/example/main.cpp)
 
 
+# BOOST example
+
+add_executable(test-esp86-boost 
+	esphome/cmake_arduino/example/boost/main.cpp
+	
+	esphome/cmake_arduino/example/boost/network/async_tcp_client_impl.cpp
+	esphome/cmake_arduino/example/boost/network/async_tcp_server_impl.cpp
+)
 find_package(Boost)
 find_package(Threads)
-target_link_libraries(test-esp86 PUBLIC Boost::boost Threads::Threads esphome)
-target_include_directories(test-esp86 PUBLIC ${Boost_INCLUDE_DIRS})
+target_link_libraries(test-esp86-boost PUBLIC Boost::boost Threads::Threads esphome)
+target_include_directories(test-esp86-boost PUBLIC ${Boost_INCLUDE_DIRS})
 
 add_definitions(-DCMAKE_BUILD)
 
