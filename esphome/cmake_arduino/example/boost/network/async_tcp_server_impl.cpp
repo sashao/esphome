@@ -70,16 +70,15 @@ void AsyncTcpServerImpl::begin() {
 }
 
 void AsyncTcpServerImpl::end() {
-    //	impl_->end();
+
 }
 
 void AsyncTcpServerImpl::setNoDelay(bool nodelay) {
-    //	impl_->setNoDelay(nodelay);
+
 }
 
 bool AsyncTcpServerImpl::getNoDelay() const {
     return true;
-    //	return impl_->getNoDelay();
 }
 
 } /* namespace network */

@@ -48,7 +48,6 @@ void AsyncTcpClientImpl::do_write(std::size_t length)
 {
 }
 
-
 bool AsyncTcpClientImpl::connect(const char* host, uint16_t port)
 {
 	return true;

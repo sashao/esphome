@@ -35,8 +35,8 @@ bool AsyncTcpClientImpl::canSend() const { return true; }
 
 size_t AsyncTcpClientImpl::space() const { return 30000; }
 
-size_t AsyncTcpClientImpl::add(const char* data, size_t size, bool wait_for_more) {
-
+size_t AsyncTcpClientImpl::add(const char* data, size_t size, bool wait_for_more)
+{
 	return size;
 }
 
