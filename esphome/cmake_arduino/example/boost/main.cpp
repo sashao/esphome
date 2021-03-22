@@ -14,6 +14,18 @@ api::APIServer *api_apiserver;
 using namespace sensor;
 using namespace api;
 
+binary_sensor::BinarySensor *sensr;
+
+class Switch2: public switch_::Switch
+{
+public:
+    virtual void write_state(bool state) {
+//        std::cout << state;
+    };
+};
+
+Switch2 *swtch;
+
 homeassistant::HomeassistantSensor *ha_hello_world;
 // ========== AUTO GENERATED INCLUDE BLOCK END ==========="
 
@@ -28,6 +40,7 @@ void setup() {
 
   logger_logger = new logger::Logger(115200, 512, logger::UART_SELECTION_UART0);
   logger_logger->pre_setup();
+  logger_logger->set_log_level("api", ESPHOME_LOG_LEVEL_VERY_VERBOSE);
   App.register_component(logger_logger);
 
 
@@ -50,6 +63,13 @@ void setup() {
   ha_hello_world->set_force_update(false);
   // =========== AUTO GENERATED CODE END ============
   // ========= YOU CAN EDIT AFTER THIS LINE =========
+
+  sensr = new BinarySensor("x86binarysensor");
+  App.register_binary_sensor(sensr);
+
+  swtch = new Switch2();
+  App.register_switch(swtch);
+
   App.setup();
 }
 
@@ -58,6 +78,7 @@ void loop() {
 }
 
 const int one_tick = 10;
+long iteration = 0;
 
 void timer_timeout(const boost::system::error_code& /*e*/,
 boost::asio::steady_timer* t)
@@ -66,6 +87,10 @@ boost::asio::steady_timer* t)
     t->expires_at(t->expires_at() + std::chrono::milliseconds(one_tick));
     t->async_wait(boost::bind(timer_timeout,
               boost::asio::placeholders::error, t));
+    ++iteration;
+    if (iteration %1000 == iteration/1000)
+    sensr->publish_state(!sensr->state);
+
 //    std::cout << "c";
 }
 
@@ -84,6 +109,7 @@ int main()
       steady_timer timer{io_service, std::chrono::milliseconds{one_tick}};
       timer.async_wait(boost::bind(timer_timeout,
                                    boost::asio::placeholders::error, &timer));
+
 
 //      boost::asio::signal_set signals(io_context, SIGINT, SIGTERM);
 //      signals.async_wait([&](auto, auto){ io_context.stop(); });

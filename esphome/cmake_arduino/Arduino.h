@@ -7,6 +7,7 @@
 
 #pragma once
 
+#define ARDUINO_BOARD "esp-x86"
 
 #include<cmath>
 #include"HardwareSerial.h"

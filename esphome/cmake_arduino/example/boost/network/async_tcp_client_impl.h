@@ -62,8 +62,9 @@ class AsyncTcpClientImpl : public AsyncClient, public std::enable_shared_from_th
   void do_write(std::size_t length);
 
   boost::asio::ip::tcp::socket socket_;
-  enum { max_length = 1024 };
+  enum { max_length = 5*1024*1024 };
   char data_[max_length];
+  std::vector<char> buf_;
 
   std::vector<std::pair<AcConnectHandler , void* >> onConnect_;
   std::vector<std::pair<AcConnectHandler , void* >> onDisconnect_;

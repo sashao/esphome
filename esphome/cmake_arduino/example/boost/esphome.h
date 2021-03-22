@@ -1,4 +1,5 @@
 #pragma once
+
 #include "esphome/components/api/api_connection.h"
 #include "esphome/components/api/api_pb2.h"
 #include "esphome/components/api/api_pb2_service.h"

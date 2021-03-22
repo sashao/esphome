@@ -39,8 +39,9 @@ void AsyncTcpClientImpl::do_read()
                 observer.first(observer.second, this, data_, length);
             }
 
-//        		do_write(length);
+
         }
+        do_read();
       });
 }
 
@@ -81,19 +82,32 @@ size_t AsyncTcpClientImpl::space() const
     return 30000;
 }
 
-size_t AsyncTcpClientImpl::add(const char* data, size_t size, bool /*wait_for_more*/) {
+size_t AsyncTcpClientImpl::add(const char* data, size_t size, bool wait_for_more) {
 
-    return write(data, size);
+    buf_.reserve(buf_.size() + size+1);
+    std::copy(data, data+size, std::back_inserter(buf_));
+
+    if (!wait_for_more) {
+        send();
+    }
+    return size;
 }
 
 bool AsyncTcpClientImpl::send() {
+
+    if (!buf_.empty())
+    {
+    write(buf_.data(), buf_.size());
+    // optimistic
+    buf_.clear();
+    }
 	return true;
 }
 
 size_t AsyncTcpClientImpl::write(const char* data)
 {
     auto self(shared_from_this());
-    boost::asio::async_write(socket_, boost::asio::buffer(data_, strlen(data)),
+    boost::asio::async_write(socket_, boost::asio::buffer(data, strlen(data)),
         [this, self](boost::system::error_code ec, std::size_t /*length*/)
         {
           if (!ec)
@@ -110,7 +124,7 @@ size_t AsyncTcpClientImpl::write(const char* data, size_t size)
 
 
     auto self(shared_from_this());
-    boost::asio::async_write(socket_, boost::asio::buffer(data_, size),
+    boost::asio::async_write(socket_, boost::asio::buffer(data, size),
         [this, self](boost::system::error_code ec, std::size_t /*length*/)
         {
           if (!ec)
