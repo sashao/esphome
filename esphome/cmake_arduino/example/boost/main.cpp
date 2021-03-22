@@ -19,8 +19,11 @@ binary_sensor::BinarySensor *sensr;
 class Switch2: public switch_::Switch
 {
 public:
+    Switch2(std::string s): switch_::Switch(s) {}
+
     virtual void write_state(bool state) {
-//        std::cout << state;
+        this->state = state;
+        publish_state(state);
     };
 };
 
@@ -33,6 +36,9 @@ homeassistant::HomeassistantSensor *ha_hello_world;
 #include <boost/asio.hpp>
 #include <boost/asio/steady_timer.hpp>
 #include <iostream>
+
+#include "esphome_hhc_n8i8op.h"
+
 
 
 void setup() {
@@ -67,8 +73,18 @@ void setup() {
   sensr = new BinarySensor("x86binarysensor");
   App.register_binary_sensor(sensr);
 
-  swtch = new Switch2();
+  swtch = new Switch2("x86switch");
   App.register_switch(swtch);
+
+  std::map<int, std::string> switch_names;
+  switch_names[1] = "turn on 12 v";
+  switch_names[2] = "Boys light 2";
+  switch_names[3] = "Boys light 3";
+  switch_names[4] = "Boys light 4";
+  switch_names[5] = "Boys light 5";
+  switch_names[6] = "Boys light 6";
+  switch_names[7] = "Boys light 7";
+  switch_names[8] = "Boys light 8";
 
   App.setup();
 }
@@ -88,7 +104,7 @@ boost::asio::steady_timer* t)
     t->async_wait(boost::bind(timer_timeout,
               boost::asio::placeholders::error, t));
     ++iteration;
-    if (iteration %1000 == iteration/1000)
+    if (iteration %1000 == iteration/1000 && swtch->state)
     sensr->publish_state(!sensr->state);
 
 //    std::cout << "c";
@@ -103,7 +119,7 @@ int main()
     try
     {
       using namespace boost::asio;
-      boost::asio::io_service io_service;
+        boost::asio::io_service io_service;
       network_io_service = &io_service;
 
       steady_timer timer{io_service, std::chrono::milliseconds{one_tick}};

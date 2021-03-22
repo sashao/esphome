@@ -18,9 +18,11 @@
 #else
 
 class IPAddress {
+    const std::string addr_;
 public:
+    IPAddress(std::string str = "127.0.0.1") : addr_(str) {};
 	std::string toString() const {
-		return std::string("127.0.0.1");
+        return addr_;
 	}
 };
 

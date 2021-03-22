@@ -47,6 +47,7 @@ void AsyncTcpClientImpl::do_read()
 
 void AsyncTcpClientImpl::do_write(std::size_t length)
 {
+    send();
 }
 
 bool AsyncTcpClientImpl::connect(const char* host, uint16_t port)
@@ -60,10 +61,12 @@ void AsyncTcpClientImpl::close(bool now)
 
 void AsyncTcpClientImpl::stop()
 {
+    socket_.close();
 }
 
 int8_t AsyncTcpClientImpl::abort()
 {
+    socket_.close();
     return true;
 }
 
@@ -144,7 +147,7 @@ bool AsyncTcpClientImpl::connecting() const
 
 bool AsyncTcpClientImpl::connected() const
 {
-    return true;
+    return socket_.is_open();
 }
 
 bool AsyncTcpClientImpl::disconnecting() const
@@ -154,7 +157,7 @@ bool AsyncTcpClientImpl::disconnecting() const
 
 bool AsyncTcpClientImpl::disconnected() const
 {
-    return false;
+    return !socket_.is_open();
 }
 
 bool AsyncTcpClientImpl::freeable() const
@@ -171,8 +174,9 @@ bool AsyncTcpClientImpl::getNoDelay() const {
 	return true;
 }
 
-IPAddress AsyncTcpClientImpl::remoteIP() {
-	return IPAddress();
+IPAddress AsyncTcpClientImpl::remoteIP()
+{
+    return IPAddress(socket_.remote_endpoint().address().to_string());
 }
 
 // Set Callbacks

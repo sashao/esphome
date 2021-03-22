@@ -71,6 +71,8 @@ add_executable(test-esp86-boost
 	
 	esphome/cmake_arduino/example/boost/network/async_tcp_client_impl.cpp
 	esphome/cmake_arduino/example/boost/network/async_tcp_server_impl.cpp
+
+        esphome/cmake_arduino/example/boost/esphome_hhc_n8i8op.cpp
 )
 find_package(Boost)
 find_package(Threads)
