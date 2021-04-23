@@ -13,11 +13,11 @@
 
 namespace esphome {
 
-static const char *TAG = "helpers";
+//static const char *TAG = "helpers";
 
 std::string get_mac_address() {
   char tmp[20];
-  uint8_t mac[6];
+  uint8_t mac[6] = {1,1,1,1,1,1};
 #ifdef ARDUINO_ARCH_ESP32
   esp_efuse_mac_get_default(mac);
 #endif
@@ -30,7 +30,7 @@ std::string get_mac_address() {
 
 std::string get_mac_address_pretty() {
   char tmp[20];
-  uint8_t mac[6];
+  uint8_t mac[6] = {1,1,1,1,1,1};
 #ifdef ARDUINO_ARCH_ESP32
   esp_efuse_mac_get_default(mac);
 #endif
