@@ -42,7 +42,7 @@ homeassistant::HomeassistantSensor *ha_hello_world;
 
 
 void setup() {
-  App.pre_setup("test-x86", __DATE__ ", " __TIME__, true);
+  App.pre_setup("test-x86", __DATE__ ", " __TIME__, false);
 
   logger_logger = new logger::Logger(115200, 512, logger::UART_SELECTION_UART0);
   logger_logger->pre_setup();
@@ -93,7 +93,7 @@ void loop() {
 	App.loop();
 }
 
-const int one_tick = 10;
+const int one_tick = 100;
 long iteration = 0;
 
 void timer_timeout(const boost::system::error_code& /*e*/,
@@ -104,7 +104,7 @@ boost::asio::steady_timer* t)
     t->async_wait(boost::bind(timer_timeout,
               boost::asio::placeholders::error, t));
     ++iteration;
-    if (iteration %1000 == iteration/1000 && swtch->state)
+    if (iteration %100 == iteration/100 && swtch->state)
     sensr->publish_state(!sensr->state);
 
 //    std::cout << "c";

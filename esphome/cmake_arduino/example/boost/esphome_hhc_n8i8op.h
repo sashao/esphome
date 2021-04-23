@@ -34,7 +34,7 @@ protected:
 class esphome_hhc_n8i8op: public esphome::Component
 {
 public:
-    esphome_hhc_n8i8op(std::map<int, std::string> switch_names, std::string host, std::string port);
+    esphome_hhc_n8i8op(std::map<int, std::string> switch_names, std::string host, std::string port = "5000");
 
     void loop() override;
     void setup() override;
