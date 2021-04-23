@@ -21,7 +21,7 @@ homeassistant::HomeassistantSensor *ha_hello_world;
 #include <iostream>
 
 void setup() {
-  App.pre_setup("test-x86", __DATE__ ", " __TIME__);
+  App.pre_setup("test-x86", __DATE__ ", " __TIME__, true);
 
   logger_logger = new logger::Logger(115200, 512, logger::UART_SELECTION_UART0);
   logger_logger->pre_setup();
