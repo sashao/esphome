@@ -5,6 +5,7 @@
 #include "esphome/core/util.h"
 #include "esphome/core/defines.h"
 #include "esphome/core/version.h"
+#include "esphome/components/network/async_tcp_server_impl.h"
 
 #ifdef USE_LOGGER
 #include "esphome/components/logger/logger.h"
@@ -21,11 +22,11 @@ static const char *TAG = "api";
 void APIServer::setup() {
   ESP_LOGCONFIG(TAG, "Setting up Home Assistant API server...");
   this->setup_controller();
-  this->server_ = AsyncServer(this->port_);
-  this->server_.setNoDelay(false);
-  this->server_.begin();
-  this->server_.onClient(
-      [](void *s, AsyncClient *client) {
+  this->server_.reset(network::create_async_server(this->port_));
+  this->server_->setNoDelay(false);
+  this->server_->begin();
+  this->server_->onClient(
+      [](void *s, esphome::network::AsyncClient *client) {
         if (client == nullptr)
           return;
 
@@ -208,9 +209,11 @@ void APIServer::send_homeassistant_service_call(const HomeassistantServiceRespon
   }
 }
 APIServer::APIServer() { global_api_server = this; }
-void APIServer::subscribe_home_assistant_state(std::string entity_id, std::function<void(std::string)> f) {
+void APIServer::subscribe_home_assistant_state(std::string entity_id, optional<std::string> attribute,
+                                               std::function<void(std::string)> f) {
   this->state_subs_.push_back(HomeAssistantStateSubscription{
       .entity_id = std::move(entity_id),
+      .attribute = std::move(attribute),
       .callback = std::move(f),
   });
 }

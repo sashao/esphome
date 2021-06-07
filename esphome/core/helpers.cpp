@@ -13,11 +13,11 @@
 
 namespace esphome {
 
-static const char *TAG = "helpers";
+//static const char *TAG = "helpers";
 
 std::string get_mac_address() {
   char tmp[20];
-  uint8_t mac[6];
+  uint8_t mac[6] = {1,1,1,1,1,1};
 #ifdef ARDUINO_ARCH_ESP32
   esp_efuse_mac_get_default(mac);
 #endif
@@ -30,7 +30,7 @@ std::string get_mac_address() {
 
 std::string get_mac_address_pretty() {
   char tmp[20];
-  uint8_t mac[6];
+  uint8_t mac[6] = {1,1,1,1,1,1};
 #ifdef ARDUINO_ARCH_ESP32
   esp_efuse_mac_get_default(mac);
 #endif
@@ -46,6 +46,8 @@ std::string generate_hostname(const std::string &base) { return base + std::stri
 uint32_t random_uint32() {
 #ifdef ARDUINO_ARCH_ESP32
   return esp_random();
+#elif CMAKE_BUILD
+  return random();
 #else
   return os_random();
 #endif
@@ -108,7 +110,11 @@ std::string value_accuracy_to_string(float value, int8_t accuracy_decimals) {
   auto multiplier = float(pow10(accuracy_decimals));
   float value_rounded = roundf(value * multiplier) / multiplier;
   char tmp[32];  // should be enough, but we should maybe improve this at some point.
+#ifdef CMAKE_BUILD
+  sprintf(tmp, "%f", value_rounded); // TODO
+#else
   dtostrf(value_rounded, 0, uint8_t(std::max(0, int(accuracy_decimals))), tmp);
+#endif
   return std::string(tmp);
 }
 std::string uint64_to_string(uint64_t num) {

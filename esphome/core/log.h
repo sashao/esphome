@@ -7,8 +7,10 @@
 #include "WString.h"
 #endif
 
+#ifndef CMAKE_BUILD
 // avoid esp-idf redefining our macros
 #include "esphome/core/esphal.h"
+#endif
 
 #ifdef ARDUINO_ARCH_ESP32
 #include "esp_err.h"

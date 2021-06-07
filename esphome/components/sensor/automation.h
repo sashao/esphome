@@ -52,6 +52,7 @@ class ValueRangeTrigger : public Trigger<float>, public Component {
 
  protected:
   void on_state_(float state) {
+    using namespace std;
     if (isnan(state))
       return;
 

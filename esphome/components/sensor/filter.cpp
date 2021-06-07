@@ -4,7 +4,7 @@
 
 namespace esphome {
 namespace sensor {
-
+using namespace std;
 static const char *TAG = "sensor.filter";
 
 // Filter
@@ -45,6 +45,7 @@ MedianFilter::MedianFilter(size_t window_size, size_t send_every, size_t send_fi
 void MedianFilter::set_send_every(size_t send_every) { this->send_every_ = send_every; }
 void MedianFilter::set_window_size(size_t window_size) { this->window_size_ = window_size; }
 optional<float> MedianFilter::new_value(float value) {
+  using namespace std;
   if (!isnan(value)) {
     while (this->queue_.size() >= this->window_size_) {
       this->queue_.pop_front();
@@ -83,6 +84,7 @@ MinFilter::MinFilter(size_t window_size, size_t send_every, size_t send_first_at
 void MinFilter::set_send_every(size_t send_every) { this->send_every_ = send_every; }
 void MinFilter::set_window_size(size_t window_size) { this->window_size_ = window_size; }
 optional<float> MinFilter::new_value(float value) {
+  using namespace std;
   if (!isnan(value)) {
     while (this->queue_.size() >= this->window_size_) {
       this->queue_.pop_front();
@@ -230,6 +232,7 @@ optional<float> MultiplyFilter::new_value(float value) { return value * this->mu
 FilterOutValueFilter::FilterOutValueFilter(float value_to_filter_out) : value_to_filter_out_(value_to_filter_out) {}
 
 optional<float> FilterOutValueFilter::new_value(float value) {
+  using namespace std;
   if (isnan(this->value_to_filter_out_)) {
     if (isnan(value))
       return {};
@@ -262,6 +265,7 @@ optional<float> ThrottleFilter::new_value(float value) {
 // DeltaFilter
 DeltaFilter::DeltaFilter(float min_delta) : min_delta_(min_delta), last_value_(NAN) {}
 optional<float> DeltaFilter::new_value(float value) {
+  using namespace std;
   if (isnan(value))
     return {};
   if (isnan(this->last_value_)) {

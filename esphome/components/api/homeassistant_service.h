@@ -17,7 +17,7 @@ template<typename... Ts> class TemplatableKeyValuePair {
 
 template<typename... Ts> class HomeAssistantServiceCallAction : public Action<Ts...> {
  public:
-  explicit HomeAssistantServiceCallAction(APIServer *parent, bool is_event) : parent_(parent), is_event_(is_event) {}
+  explicit HomeAssistantServiceCallAction(esphome::api::APIServer *parent, bool is_event) : parent_(parent), is_event_(is_event) {}
 
   TEMPLATABLE_STRING_VALUE(service);
   template<typename T> void add_data(std::string key, T value) {
@@ -52,11 +52,13 @@ template<typename... Ts> class HomeAssistantServiceCallAction : public Action<Ts
       kv.value = it.value.value(x...);
       resp.variables.push_back(kv);
     }
+#ifndef CMAKE_BUILD // generates warning about incomplete type usage
     this->parent_->send_homeassistant_service_call(resp);
+#endif
   }
 
  protected:
-  APIServer *parent_;
+  esphome::api::APIServer *parent_;
   bool is_event_;
   std::vector<TemplatableKeyValuePair<Ts...>> data_;
   std::vector<TemplatableKeyValuePair<Ts...>> data_template_;

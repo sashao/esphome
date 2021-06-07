@@ -133,6 +133,7 @@ void Component::status_momentary_error(const std::string &name, uint32_t length)
 }
 void Component::dump_config() {}
 float Component::get_actual_setup_priority() const {
+  using namespace std;
   if (isnan(this->setup_priority_override_))
     return this->get_setup_priority();
   return this->setup_priority_override_;
